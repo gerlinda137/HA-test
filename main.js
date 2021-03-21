@@ -23,7 +23,7 @@ date.setMonth(date.getMonth() - 1);
 let prevDateString = dateToString(date);
 
 fetch(
-  `http://api.mediastack.com/v1/news?access_key=90c0b0e1be04217e3d425e63fe390e00&countries=ru&languages=ru&date=${prevDateString},${currentDateString}`
+  `http://api.mediastack.com/v1/news?access_key=90c0b0e1be04217e3d425e63fe390e00&countries=ru&languages=ru&date=${prevDateString},${currentDateString}&sort=published_desc&limit=5`
 )
   .then(function (resp) {
     return resp.json();
@@ -38,7 +38,7 @@ fetch(
 
       clonedCard.querySelector('.card__title').textContent = data[i].title;
       clonedCard.querySelector('.card__author').textContent = data[i].source;
-      clonedCard.querySelector('.card__date').textContent = date.toLocaleDateString();
+      clonedCard.querySelector('.card__date').textContent = date.toLocaleString('ru-RU', {year: "numeric", month: "long", day:"numeric", hour: "numeric", minute:"numeric"});
       clonedCard.querySelector('.card__description').textContent = data[i].description;
       clonedCard.querySelector('.card__link').href = data[i].url;
 
