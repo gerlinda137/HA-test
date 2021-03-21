@@ -1,4 +1,3 @@
-
 function createContainer () {
   document.body.insertAdjacentHTML('beforeend','<div class="thread"><ul class="thread-list"></ul></div>');
 }
@@ -13,8 +12,18 @@ createCardTemplate();
 
 const cardTemplate = document.querySelector('.card-template');
 
+function dateToString(date) {
+  return date.toISOString().substring(0, 10);
+}
+
+let date = new Date();
+let currentDateString = dateToString(date);
+
+date.setMonth(date.getMonth() - 1);
+let prevDateString = dateToString(date);
+
 fetch(
-  `http://api.mediastack.com/v1/news?access_key=90c0b0e1be04217e3d425e63fe390e00&countries=ru&languages=ru`
+  `http://api.mediastack.com/v1/news?access_key=90c0b0e1be04217e3d425e63fe390e00&countries=ru&languages=ru&date=${prevDateString},${currentDateString}`
 )
   .then(function (resp) {
     return resp.json();
@@ -25,9 +34,11 @@ fetch(
 
     for (let i = 0; i <= data.length; i++) {
       let clonedCard = cardTemplate.content.cloneNode(true);
+      let date = new Date(data[i].published_at);
+
       clonedCard.querySelector('.card__title').textContent = data[i].title;
       clonedCard.querySelector('.card__author').textContent = data[i].source;
-      clonedCard.querySelector('.card__date').innerHTML = data[i].published_at;
+      clonedCard.querySelector('.card__date').textContent = date.toLocaleDateString();
       clonedCard.querySelector('.card__description').textContent = data[i].description;
       clonedCard.querySelector('.card__link').href = data[i].url;
 
@@ -95,7 +106,9 @@ fetch(
       width: 15px;
       height: 15px;
       background-image: url('https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/9-512.png');
-      top: 0;
+      background-size: contain;
+      background-repeat: no-repeat;
+      top: -1px;
       left: 0;
     }
       
