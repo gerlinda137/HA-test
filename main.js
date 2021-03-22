@@ -176,7 +176,7 @@
   let prevDateString = dateToApiString(date);
 
   fetch(
-      `http://api.mediastack.com/v1/news?access_key=90c0b0e1be04217e3d425e63fe390e00&countries=ru&languages=ru&date=${prevDateString},${currentDateString}&sort=published_desc&limit=5`
+      `http://api.mediastack.com/v1/news?access_key=e92871b85b366cebe9ca71acba1ba48b&countries=ru&languages=ru&date=${prevDateString},${currentDateString}&sort=published_desc&limit=5`
     )
     .then(function (resp) {
       return resp.json();
