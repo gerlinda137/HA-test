@@ -30,11 +30,22 @@ function jsonReceived(json) {
     let clonedCard = cardTemplate.content.cloneNode(true);
     let date = new Date(data[i].published_at);
 
+    const url = data[i].url;
+
     clonedCard.querySelector('.card__title').textContent = data[i].title;
     clonedCard.querySelector('.card__author').textContent = data[i].source;
     clonedCard.querySelector('.card__date').textContent = date.toLocaleString('ru-RU', { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric" });
     clonedCard.querySelector('.card__description').textContent = data[i].description;
-    clonedCard.querySelector('.card__link').href = data[i].url;
+
+    const linkElement = clonedCard.querySelector('.card__link');
+    linkElement.href = url;
+    linkElement.onclick = () => {
+      localStorage.setItem(url, true);
+    }
+    
+    if (localStorage.getItem(url)) {
+      clonedCard.querySelector('.card__status').textContent = 'Просмотрено';
+    }
 
     threadList.appendChild(clonedCard);
   }
@@ -47,11 +58,12 @@ function createStyles() {
     max-width: 300px;
     padding-top: 20px;
     width: 100%;
-    position: sticky;
+    position: absolute;
     right: 0;
-    bottom: 0;
+    top: 0;
     background-color: #ffffff;
     font-family: Arial, sans-serif;
+    z-index: 100;
   }
   .thread-list {
     display: flex;
