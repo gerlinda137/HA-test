@@ -1,5 +1,5 @@
 function createContainer () {
-  document.body.insertAdjacentHTML('beforeend','<div class="thread"><ul class="thread-list"></ul></div>');
+  document.body.insertAdjacentHTML('beforeend','<div class="thread"><button class="thread__show-button"></button><ul class="thread-list"></ul></div>');
 }
 createContainer();
 
@@ -25,6 +25,16 @@ let prevDateString = dateToString(date);
 function jsonReceived(json) {
   console.log(json);
   let data = json.data;
+  const showButton = document.querySelector('.thread__show-button');
+  showButton.textContent = 'Показать новости (' + json.pagination.count + ')';
+  showButton.onclick = () => {
+    threadList.classList.toggle('thread-list--shown');
+    if (threadList.classList.contains('thread-list--shown')) {
+      showButton.textContent = 'Скрыть новости';
+    } else {
+      showButton.textContent = 'Показать новости (' + json.pagination.count + ')';
+    }
+  }
 
   for (let i = 0; i < data.length; i++) {
     let clonedCard = cardTemplate.content.cloneNode(true);
@@ -59,17 +69,31 @@ function createStyles() {
     padding-top: 20px;
     width: 100%;
     position: absolute;
-    right: 0;
+    right: 10px;
     top: 0;
     background-color: #ffffff;
     font-family: Arial, sans-serif;
     z-index: 100;
   }
+  .thread__show-button {
+    background: transparent; 
+    border: 1ps back solid;
+    border-radius: 5px;
+    width: 100%;
+    height: 20px;
+    cursor: pointer;
+  }
+  .thread__show-button:hover {
+    color: #8b2222;
+  }
   .thread-list {
-    display: flex;
+    display: none;
     flex-direction: column;
     style-list: none;
     padding-left: 0;
+  }
+  .thread-list--shown {
+    display:flex;
   }
   .card {
     display: flex;
