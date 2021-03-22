@@ -71,16 +71,15 @@ function createStyles() {
     position: absolute;
     right: 10px;
     top: 0;
-    background-color: #ffffff;
     font-family: Arial, sans-serif;
     z-index: 100;
   }
   .thread__show-button {
-    background: transparent; 
+    background: white; 
     border: 1ps back solid;
     border-radius: 5px;
     width: 100%;
-    height: 20px;
+    height: 30px;
     cursor: pointer;
   }
   .thread__show-button:hover {
